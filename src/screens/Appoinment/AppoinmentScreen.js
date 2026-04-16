@@ -9,13 +9,12 @@ import {
     TouchableOpacity,
     View,
 } from "react-native";
+import { Calendar } from "react-native-calendars";
 import { moderateScale, scale, verticalScale } from "../../utility/helper";
 
 const AppointmentScreen = ({ navigation }) => {
-  const [selectedDate, setSelectedDate] = useState(6);
-  const [selectedTime, setSelectedTime] = useState("02:00 PM");
-
-  const dates = [2, 3, 4, 5, 6, 7, 8];
+  const [selectedDate, setSelectedDate] = useState("");
+  const [selectedTime, setSelectedTime] = useState("");
 
   const morningSlots = ["09:00 AM", "09:45 AM", "10:30 AM", "11:15 AM"];
   const afternoonSlots = ["02:00 PM", "02:45 PM", "03:30 PM", "04:15 PM"];
@@ -47,7 +46,7 @@ const AppointmentScreen = ({ navigation }) => {
         <Text style={styles.headerTitle}>Sanctuary</Text>
 
         <Image
-          source={require("../../../assets/images/face.jpg")}
+          source={require("../../../assets/images/doctor1.png")}
           style={styles.headerAvatar}
         />
       </View>
@@ -63,30 +62,29 @@ const AppointmentScreen = ({ navigation }) => {
         <View style={styles.card}>
           <View style={styles.rowBetween}>
             <Text style={styles.cardTitle}>Select Date</Text>
-            <Text style={styles.month}>October 2023</Text>
-          </View>
 
-          <View style={styles.dateRow}>
-            {dates.map((d) => {
-              const isSelected = d === selectedDate;
-
-              return (
-                <TouchableOpacity
-                  key={d}
-                  onPress={() => setSelectedDate(d)}
-                  style={[styles.dateItem, isSelected && styles.activeDate]}
-                >
-                  <Text
-                    style={[
-                      styles.dateText,
-                      isSelected && styles.activeDateText,
-                    ]}
-                  >
-                    {d}
-                  </Text>
-                </TouchableOpacity>
-              );
-            })}
+            <Calendar
+              onDayPress={(day) => {
+                setSelectedDate(day.dateString);
+              }}
+              markedDates={{
+                [selectedDate]: {
+                  selected: true,
+                  selectedColor: "#2563EB",
+                },
+              }}
+              minDate={new Date().toISOString().split("T")[0]}
+              theme={{
+                backgroundColor: "#fff",
+                calendarBackground: "#fff",
+                textSectionTitleColor: "#888",
+                selectedDayBackgroundColor: "#2563EB",
+                selectedDayTextColor: "#fff",
+                todayTextColor: "#2563EB",
+                dayTextColor: "#333",
+                textDisabledColor: "#ccc",
+              }}
+            />
           </View>
         </View>
 
@@ -143,7 +141,7 @@ const AppointmentScreen = ({ navigation }) => {
           <View style={styles.infoRow}>
             <Text style={styles.label}>Date & Time</Text>
             <Text>
-              Oct {selectedDate} • {selectedTime}
+              {selectedDate} • {selectedTime}
             </Text>
           </View>
 
@@ -186,7 +184,7 @@ const styles = StyleSheet.create({
   },
 
   header: {
-    marginTop: verticalScale(55),
+    marginTop: verticalScale(50),
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
@@ -195,8 +193,9 @@ const styles = StyleSheet.create({
     paddingBottom: verticalScale(10),
 
     backgroundColor: "#fff",
-    elevation: 4,
+    elevation: 5,
     shadowOpacity: 0.08,
+    shadowOffset: { width: 0, height: 3 },
   },
 
   headerTitle: {

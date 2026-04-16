@@ -27,7 +27,7 @@ const HomeScreen = ({ navigation }) => {
       <View style={styles.topHeader}>
         <View style={styles.leftTopHeaderContainer}>
           <Image
-            source={require("../../../assets/images/face.jpg")}
+            source={require("../../../assets/images/doctor1.png")}
             style={styles.profileImage}
           />
           <Text style={styles.leftHeaderText}>Sanctuary</Text>
@@ -42,7 +42,7 @@ const HomeScreen = ({ navigation }) => {
 
       <ScrollView showsVerticalScrollIndicator={false}>
         {/* GREETING */}
-        <Text style={styles.greeting}>GOOD MORNING, SATYAM</Text>
+        <Text style={styles.greeting}>GOOD MORNING, ELENA</Text>
 
         {/* TITLE */}
         <Text style={styles.title}>
@@ -164,7 +164,7 @@ const styles = StyleSheet.create({
   },
 
   topHeader: {
-    marginTop: verticalScale(55),
+    marginTop: verticalScale(50),
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
